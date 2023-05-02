@@ -87,7 +87,8 @@ public class LedgerApp {
         String description = "description:"  +  scanner1.next();
         //Write the input to the CSV file
         try
-        { FileWriter csvWriter = new FileWriter("transaction.csv");
+        {
+            FileWriter csvWriter = new FileWriter("transaction.csv", true);
             csvWriter.append(description);
             csvWriter.append("/n");
             csvWriter.flush();
@@ -97,6 +98,18 @@ public class LedgerApp {
         catch (IOException e)
         {
             System.out.println("Error when saving description.");
+        }
+        finally {
+            try
+            {
+                if (csvWriter != null) {
+                    csvWriter.close();
+                }
+            }
+            catch(IOException e)
+            {
+                System.out.println("Error when closing writer. ");
+            }
         }
 
         System.out.println("Enter the name of the vendor: ");
