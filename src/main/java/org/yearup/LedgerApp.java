@@ -6,11 +6,36 @@ public class LedgerApp {
     private Scanner scanner = new Scanner(System.in);
     public void run()
     {
-
+        boolean running = true;
+        while (running) {
         displayHomeScreen();
+        String choice = scanner.nextLine();
+        switch (choice)
+        {
+            case "1":
+                addDeposit();
+                break;
+            case "2":
+                viewLedger();
+                break;
+            case "3":
+                makePayment();
+                break;
+            case "4":
+                running = false;
+                break;
+            default:
+                System.out.println("Invalid choice. Please select one of the options listed.");
+        }
+    }
+
+
+
 
 
     }
+
+
 
 
 
@@ -26,7 +51,9 @@ public class LedgerApp {
         System.out.println("4.) Exit");
         System.out.println("Please choose a option:  ");
 
-    }
+
+
+            }
 
     public void addDeposit()
     {
@@ -69,34 +96,20 @@ public class LedgerApp {
         System.out.println("Enter a description of the payment: ");
         String description = "description";
 
-        System.out.println("Enter your name: ");
+        System.out.println("Enter your vendor name: ");
+        String vendor = "vendorName";
+
+        System.out.println("Enter the amount of the payment: ");
+        double amount = Double.parseDouble("");
+        Transaction payment;
+        payment = new Transaction(date,time,description,vendor,amount); 
+
 
 
 
     }
 
 }
-    /*public void run() {
-        Scanner scanner = new Scanner(System.in);
-        boolean running = true;
-        while (running) {
-            displayHomeScreen();
-            String choice = scanner.nextLine();
-            switch (choice) {
-                case "1":
-                    addDeposit();
-                    break;
-                case "2":
-                    viewLedger();
-                    break;
-                case "3":
-                    makePayment();
-                    break;
-                case "4":
-                    running = false;
-                    break;
-                default:
-                    System.out.println("Invalid choice. Please choose a number from 1 to 4.");
-            }*/
+
 
 
