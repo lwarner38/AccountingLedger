@@ -1,8 +1,15 @@
 package org.yearup;
-
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
 
+
+
 public class LedgerApp {
+    public LocalDate today = LocalDate.now();
+
     private Scanner scanner = new Scanner(System.in);
     public void run()
     {
@@ -57,23 +64,42 @@ public class LedgerApp {
 
     public void addDeposit()
     {
-        System.out.println("Enter the date of the deposit (YYYY/MM/DD:");
-        String date = "date";
 
-        System.out.println("Enter the time of the deposit (HH:MM AM/PM: ");
-        String time = "time";
+        Scanner scanner1 = new Scanner(System.in);
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+
+        System.out.println("Date of deposit: " + date);
+
+        System.out.println("Time of deposit : " + time);
+
+
 
         System.out.println("Enter a description of the deposit: ");
-        String description = "description";
+        // Read input from the user
+        String description = "description:"  +  scanner1.next();
+        //Write the input to the CSV file
+        try
+        { FileWriter csvWriter = new FileWriter("output.csv");
+            csvWriter.append(description);
+            csvWriter.append("/n");
+            csvWriter.flush();
+            System.out.println("Description saved.");
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error when saving description.");
+        }
 
         System.out.println("Enter the name of the vendor: ");
-        String vendor = "vendor";
+        String vendor = "vendor:"  +  scanner1.next();
 
         System.out.println("Enter the amount of the deposit: ");
-        String amountStr = scanner.nextLine();
-        double amount = Double.parseDouble("");
-        Transaction deposit;
-        deposit = new Transaction(date,time,description,vendor,amount);
+        String amountStr = scanner1.nextLine();
+        double amount = Double.parseDouble(scanner1.nextLine());
+        Transaction transaction = new Transaction(date.toString() ,time.toString() ,description,vendor,amount);
+
+        
 
     }
     public void viewLedger()
@@ -89,23 +115,21 @@ public class LedgerApp {
     public void makePayment()
     {
         Scanner scanner1 = new Scanner(System.in);
-        String input = "";
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
 
-        System.out.println("Enter the date of the payment (YYYY/MM/DD:");
-        input = scanner1.nextLine();
+        System.out.println("Date of deposit: " + date);
 
-
-        System.out.println("Enter the time of the payment (HH:MM AM/PM: ");
-        String time = "time:" + scanner.nextLine();
+        System.out.println("Time of deposit : " + time);
 
         System.out.println("Enter a description of the payment: ");
-        String description = "description:" + scanner.nextLine();
+        String description = "description:" + scanner1.next();
 
         System.out.println("Enter your vendor name: ");
-        String vendor = "vendorName:" + scanner.nextLine();
+        String vendor = "vendorName:" + scanner1.next();
 
         System.out.println("Enter the amount of the payment: ");
-        double amount = Double.parseDouble(scanner.nextLine());
+        double amount = Double.parseDouble(scanner1.next());
         Transaction payment;
         //payment = new Transaction(date,time,description,vendor,amount);
 
