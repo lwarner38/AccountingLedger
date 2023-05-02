@@ -3,11 +3,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.Scanner;
 
 
 
 public class LedgerApp {
+
     public LocalDate today = LocalDate.now();
 
     private Scanner scanner = new Scanner(System.in);
@@ -49,7 +52,6 @@ public class LedgerApp {
     public void displayHomeScreen()
     {
         //Prompt user for deposit information
-
         System.out.println("Welcome to your account ledger");
         System.out.println("-----------------------------------------------------");
         System.out.println("1.) Add deposit");
@@ -68,10 +70,15 @@ public class LedgerApp {
         Scanner scanner1 = new Scanner(System.in);
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("hh:mm a");
+        String formattedTime = time.format(formatter);
+
 
         System.out.println("Date of deposit: " + date);
 
-        System.out.println("Time of deposit : " + time);
+
+
+        System.out.println("Time of deposit : " + formattedTime);
 
 
 
@@ -80,10 +87,11 @@ public class LedgerApp {
         String description = "description:"  +  scanner1.next();
         //Write the input to the CSV file
         try
-        { FileWriter csvWriter = new FileWriter("output.csv");
+        { FileWriter csvWriter = new FileWriter("transaction.csv");
             csvWriter.append(description);
             csvWriter.append("/n");
             csvWriter.flush();
+            csvWriter.close();
             System.out.println("Description saved.");
         }
         catch (IOException e)
@@ -99,7 +107,7 @@ public class LedgerApp {
         double amount = Double.parseDouble(scanner1.nextLine());
         Transaction transaction = new Transaction(date.toString() ,time.toString() ,description,vendor,amount);
 
-        
+
 
     }
     public void viewLedger()
