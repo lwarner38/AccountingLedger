@@ -70,6 +70,7 @@ public class LedgerApp {
         String vendor = "vendor";
 
         System.out.println("Enter the amount of the deposit: ");
+        String amountStr = scanner.nextLine();
         double amount = Double.parseDouble("");
         Transaction deposit;
         deposit = new Transaction(date,time,description,vendor,amount);
@@ -87,22 +88,26 @@ public class LedgerApp {
     }
     public void makePayment()
     {
+        Scanner scanner1 = new Scanner(System.in);
+        String input = "";
+
         System.out.println("Enter the date of the payment (YYYY/MM/DD:");
-        String date = "date";
+        input = scanner1.nextLine();
+
 
         System.out.println("Enter the time of the payment (HH:MM AM/PM: ");
-        String time = "time";
+        String time = "time:" + scanner.nextLine();
 
         System.out.println("Enter a description of the payment: ");
-        String description = "description";
+        String description = "description:" + scanner.nextLine();
 
         System.out.println("Enter your vendor name: ");
-        String vendor = "vendorName";
+        String vendor = "vendorName:" + scanner.nextLine();
 
         System.out.println("Enter the amount of the payment: ");
-        double amount = Double.parseDouble("");
+        double amount = Double.parseDouble(scanner.nextLine());
         Transaction payment;
-        payment = new Transaction(date,time,description,vendor,amount); 
+        //payment = new Transaction(date,time,description,vendor,amount);
 
 
 
