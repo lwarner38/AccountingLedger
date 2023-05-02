@@ -3,40 +3,20 @@ package org.yearup;
 import java.util.Scanner;
 
 public class LedgerApp {
+    private Scanner scanner = new Scanner(System.in);
     public void run()
     {
-        Scanner scanner = new Scanner(System.in);
+
         displayHomeScreen();
 
 
     }
 
-    public class Deposit
-    {
-        private String date;
-        private String time;
-        private String description;
-        private String vendor;
-        private double amount;
 
-        public Deposit(String date, String time, String description, String vendor, double amount)
-        {
-            this.date = date;
-            this.time = time;
-            this.description = description;
-            this.vendor = vendor;
-            this.amount = amount;
-        }
-        public String toCSVString()
-        {
-            return String.format("%s,%s,%s,%s,%f", date,time,description,vendor,amount);
-        }
-    }
 
     public void displayHomeScreen()
     {
         //Prompt user for deposit information
-        Scanner scanner = new Scanner(System.in);
 
         System.out.println("Welcome to your account ledger");
         System.out.println("-----------------------------------------------------");
@@ -64,16 +44,34 @@ public class LedgerApp {
 
         System.out.println("Enter the amount of the deposit: ");
         double amount = Double.parseDouble("");
-        Deposit deposit;
-        deposit = new Deposit(date,time,description,vendor,amount);
+        Transaction deposit;
+        deposit = new Transaction(date,time,description,vendor,amount);
 
     }
     public void viewLedger()
     {
+        System.out.println("1.) View all entries ");
+        System.out.println("2.) View deposits ");
+        System.out.println("3.) View payments ");
+        System.out.println("4.) Go back to home screen ");
+        System.out.println("Please select a option: ");
+
 
     }
     public void makePayment()
     {
+        System.out.println("Enter the date of the payment (YYYY/MM/DD:");
+        String date = "date";
+
+        System.out.println("Enter the time of the payment (HH:MM AM/PM: ");
+        String time = "time";
+
+        System.out.println("Enter a description of the payment: ");
+        String description = "description";
+
+        System.out.println("Enter your name: ");
+
+
 
     }
 

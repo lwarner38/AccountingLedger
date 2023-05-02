@@ -1,15 +1,14 @@
 package org.yearup;
 
-public class Transactions {
+public class Transaction {
 
-    public class Deposit {
         private String date;
         private String time;
         private String description;
         private String vendor;
         private double amount;
 
-        public Deposit(String date, String time, String description, String vendor, double amount) {
+        public Transaction(String date, String time, String description, String vendor, double amount) {
             this.date = date;
             this.time = time;
             this.description = description;
@@ -62,6 +61,6 @@ public class Transactions {
         public void setAmount(double amount) {
             this.amount = amount;
         }
-    }
+
 }
 
