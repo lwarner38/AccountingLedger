@@ -86,19 +86,21 @@ public class LedgerApp {
         // Read input from the user
         String description = "description:"  +  scanner1.next();
         //Write the input to the CSV file
+        FileWriter csvWriter = null;
         try
         {
-            FileWriter csvWriter = new FileWriter("transaction.csv", true);
+            csvWriter = new FileWriter("transaction.csv", true);
             csvWriter.append(description);
-            csvWriter.append("/n");
+            csvWriter.append("\n");
             csvWriter.flush();
-            csvWriter.close();
+            //csvWriter.close();
             System.out.println("Description saved.");
         }
         catch (IOException e)
         {
             System.out.println("Error when saving description.");
         }
+        //Check if the csvWriter is not null before closing it
         finally {
             try
             {
@@ -117,7 +119,7 @@ public class LedgerApp {
 
         System.out.println("Enter the amount of the deposit: ");
         String amountStr = scanner1.nextLine();
-        double amount = Double.parseDouble(scanner1.nextLine());
+        double amount = Double.parseDouble(scanner1.next());
         Transaction transaction = new Transaction(date.toString() ,time.toString() ,description,vendor,amount);
 
 
