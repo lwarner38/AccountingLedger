@@ -29,7 +29,7 @@ public class LedgerApp {
 
     public void displayHomeScreen()
     {
-        //Prompt user for deposit information
+        //Display home screen options
 
         boolean running = true;
         while (running)
@@ -115,6 +115,7 @@ public class LedgerApp {
             writer.flush();
             writer.close();
             System.out.println("Transaction saved.");
+            System.out.println("\n");
 
 
         }
@@ -127,7 +128,7 @@ public class LedgerApp {
     public void viewLedger()
     {
         while(true) {
-
+            System.out.println("\n");
             System.out.println("Ledger Screen");
             System.out.println("---------------------------------------------");
             System.out.println("Please select a option: ");
@@ -149,9 +150,9 @@ public class LedgerApp {
 
                     for (Transaction transaction : transactions) {
 
-                        System.out.printf("%-15s %-15s %-20s %-15s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                        System.out.printf("%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
 
-                        System.out.println("----------------------------------------------------------------------");
+                        System.out.println("-------------------------------------------------------------------------------------------------------");
                     }
 
                     break;
@@ -160,9 +161,9 @@ public class LedgerApp {
                     for (Transaction transaction : transactions) {
                         if (transaction.getAmount()>0) {
 
-                            System.out.printf("%-15s %-15s %-20s %-15s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                            System.out.printf("%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
 
-                            System.out.println("----------------------------------------------------------------------");
+                            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
                         }
                     }
                     break;
