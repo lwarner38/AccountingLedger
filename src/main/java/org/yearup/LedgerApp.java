@@ -1,6 +1,7 @@
 package org.yearup;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.Writer;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
@@ -14,6 +15,7 @@ public class LedgerApp {
     public LocalDate today = LocalDate.now();
 
     private Scanner scanner = new Scanner(System.in);
+    private String csvFile = "transaction.csv";
     public void run()
     {
         boolean running = true;
@@ -39,10 +41,6 @@ public class LedgerApp {
         }
     }
 
-
-
-
-
     }
 
 
@@ -62,7 +60,7 @@ public class LedgerApp {
 
 
 
-            }
+    }
 
     public void addDeposit()
     {
@@ -86,33 +84,21 @@ public class LedgerApp {
         // Read input from the user
         String description = "description:"  +  scanner1.next();
         //Write the input to the CSV file
-        FileWriter csvWriter = null;
-        try
-        {
-            csvWriter = new FileWriter("transaction.csv", true);
-            csvWriter.append(description);
-            csvWriter.append("\n");
-            csvWriter.flush();
-            //csvWriter.close();
-            System.out.println("Description saved.");
-        }
-        catch (IOException e)
-        {
-            System.out.println("Error when saving description.");
-        }
-        //Check if the csvWriter is not null before closing it
-        finally {
+        //FileWriter writer= new FileWriter("transaction.csv");
+
+        //Check if the writer is not null before closing it
+        /*finally {
             try
             {
-                if (csvWriter != null) {
-                    csvWriter.close();
+                if (writer != null) {
+                    writer.close();
                 }
             }
             catch(IOException e)
             {
                 System.out.println("Error when closing writer. ");
             }
-        }
+        }*/
 
         System.out.println("Enter the name of the vendor: ");
         String vendor = "vendor:"  +  scanner1.next();
@@ -122,7 +108,21 @@ public class LedgerApp {
         double amount = Double.parseDouble(scanner1.next());
         Transaction transaction = new Transaction(date.toString() ,time.toString() ,description,vendor,amount);
 
+        try
+        {
+            FileWriter writer = new FileWriter("transaction.csv", true);
+            writer.append(scanner1.next());
+            writer.append("\n");
+            writer.flush();
+            writer.close();
+            System.out.println("Description saved.");
 
+
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error when saving description.");
+        }
 
     }
     public void viewLedger()
