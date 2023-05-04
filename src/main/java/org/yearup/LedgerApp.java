@@ -1,11 +1,9 @@
 package org.yearup;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
 import java.util.List;
@@ -132,10 +130,33 @@ public class LedgerApp {
 
         String choice = scanner.nextLine();
 
+    public List<Transaction> readTransactionFromCSV(String csvFile)
+        {
+            List<Transaction> transactions = new ArrayList<>();
+            try (Scanner scanner = new Scanner(new File(csvFile))) {
+                while (scanner.hasNextLine()) {
+                    String line = scanner.nextLine();
+                    String[] fields = line.split(",");
+                    Transaction transaction = new Transaction(fields[0], fields[1], fields[2], fields[3], Double.parseDouble(fields[4]));
+                    transactions.add(transaction);
+                }
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            return;
+
+
+    }
+
         switch (choice)
         {
             case "1":
                 //View all entries
+                List<Transaction> transactions = readTransactionFromCSV(csvFile);
+                for (Transaction transaction : transactions){
+                    System.out.println(transaction.toString());
+                }
+
                 break;
             case "2":
                 //View deposits
@@ -158,7 +179,7 @@ public class LedgerApp {
                 {
                     case "1":
                         //Generate Month To Date report
-                       List<Transaction> transaction = readTransactionFromCSV()
+                        transactions = readTransactionFromCSV(csvFile);
                                 //Print out all transactions
                         for(Transaction transaction : transactions)
                         {
@@ -195,10 +216,20 @@ public class LedgerApp {
 
 
         }
-
-
-
-
+    }
+    public List<Transaction> readTransactionFromCSV(String csvFile) {
+        List<Transaction> transactions = new ArrayList<>();
+        try (Scanner scanner = new Scanner(new File(csvFile))) {
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                String[] fields = line.split("|");
+                Transaction transaction = new Transaction(fields[0], fields[1], fields[2], fields[3], Double.parseDouble(fields[4]));
+                transactions.add(transaction);
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return transactions;
     }
 
 
