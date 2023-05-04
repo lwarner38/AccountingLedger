@@ -111,11 +111,20 @@ public class LedgerApp {
         try
         {
             FileWriter writer = new FileWriter("transaction.csv", true);
-            writer.append(scanner1.next());
+            writer.append(transaction.getDate());
+            writer.append(",");
+            writer.append(transaction.getTime());
+            writer.append(",");
+            writer.append(transaction.getDescription());
+            writer.append(",");
+            writer.append(transaction.getVendor());
+            writer.append(",");
+            writer.append(Double.toString(transaction.getAmount()));
+            writer.append(",");
             writer.append("\n");
             writer.flush();
             writer.close();
-            System.out.println("Description saved.");
+            System.out.println("Transaction saved.");
 
 
         }
@@ -130,6 +139,7 @@ public class LedgerApp {
         System.out.println("1.) View all entries ");
         System.out.println("2.) View deposits ");
         System.out.println("3.) View payments ");
+        System.out.println("4.) View reports ");
         System.out.println("4.) Go back to home screen ");
         System.out.println("Please select a option: ");
 
@@ -145,10 +155,10 @@ public class LedgerApp {
 
         System.out.println("Time of deposit : " + time);
 
-        System.out.println("Enter a description of the payment: ");
-        String description = "description:" + scanner1.next();
+        System.out.println("Enter your debit/credit information: ");
+        String description = "debit/credit card number:" + scanner1.next() + "Expiration" + scanner1.next();
 
-        System.out.println("Enter your vendor name: ");
+        System.out.println("Enter your vendor/cardholder name: ");
         String vendor = "vendorName:" + scanner1.next();
 
         System.out.println("Enter the amount of the payment: ");
