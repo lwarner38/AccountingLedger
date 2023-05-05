@@ -121,7 +121,7 @@ public class LedgerApp {
         }
         catch (IOException e)
         {
-            System.out.println("Error when saving description.");
+            System.out.println("Error when saving transaction.");
         }
 
     }
@@ -270,16 +270,42 @@ public class LedgerApp {
 
         System.out.println("Time of deposit : " + time);
 
-        System.out.println("Enter your debit/credit information: ");
-        String description = "debit/credit card number:" + scanner1.next() + "Expiration" + scanner1.next();
+        System.out.println("Enter your payment description: ");
+        String description = scanner1.next();
 
-        System.out.println("Enter your vendor/cardholder name: ");
-        String vendor = "vendorName:" + scanner1.next();
+        System.out.println("Enter the vendor name: ");
+        String vendor = scanner1.next();
 
         System.out.println("Enter the amount of the payment: ");
         double amount = Double.parseDouble(scanner1.next());
         Transaction payment;
         //payment = new Transaction(date,time,description,vendor,amount);
+        Transaction transaction = new Transaction(date ,time ,description,vendor,amount);
+
+        try
+        {
+            FileWriter writer = new FileWriter("transaction.csv", true);
+            writer.append(transaction.getDate().toString());
+            writer.append('|');
+            writer.append(transaction.getTime().toString());
+            writer.append('|');
+            writer.append(transaction.getDescription());
+            writer.append('|');
+            writer.append(transaction.getVendor());
+            writer.append('|');
+            writer.append(Double.toString(transaction.getAmount()));
+            writer.append("\n");
+            writer.flush();
+            writer.close();
+            System.out.println("Transaction saved.");
+            System.out.println("\n");
+
+
+        }
+        catch (IOException e)
+        {
+            System.out.println("Error when saving transaction.");
+        }
 
 
 
