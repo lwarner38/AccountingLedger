@@ -115,7 +115,9 @@ public class LedgerApp {
             writer.append("\n");
             writer.flush();
             writer.close();
+            System.out.println(ColorCodes.GREEN);
             System.out.println("Transaction saved.");
+            System.out.printf("$%.2f successfully deposited\n", transaction.getAmount());
             System.out.println("\n");
             System.out.println( ColorCodes.GREEN + "Returning to Home Screen...." + ColorCodes.RESET);
 
@@ -364,7 +366,9 @@ public class LedgerApp {
             writer.append("\n");
             writer.flush();
             writer.close();
-            System.out.println("Transaction saved.");
+            System.out.println(ColorCodes.GREEN + "Transaction saved.");
+            System.out.printf("$%.2f successfully paid \n", transaction.getAmount());
+            System.out.println(ColorCodes.RESET);
             System.out.println("\n");
 
 
