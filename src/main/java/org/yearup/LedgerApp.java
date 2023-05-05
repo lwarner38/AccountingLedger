@@ -1,20 +1,21 @@
 package org.yearup;
 import jdk.jfr.Description;
 
+import java.awt.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Scanner;
+import java.util.*;
+import java.util.Calendar;
 import java.util.List;
-
 
 
 public class LedgerApp {
 
     public LocalDate today = LocalDate.now();
+
 
     private Scanner scanner = new Scanner(System.in);
     private String csvFile = "transaction.csv";
@@ -34,9 +35,9 @@ public class LedgerApp {
         boolean running = true;
         while (running)
         {
-            System.out.println("Welcome to your account ledger");
+            System.out.println(ColorCodes.PURPLE +  "Welcome to your account ledger"+ ColorCodes.RESET);
             System.out.println("-----------------------------------------------------");
-            System.out.println("1.) Add deposit");
+            System.out.println( "\u001B[33m1.) Add deposit\u001B[33m");
             System.out.println("2.) View ledger");
             System.out.println("3.) Make a payment");
             System.out.println("4.) Exit");
@@ -116,6 +117,7 @@ public class LedgerApp {
             writer.close();
             System.out.println("Transaction saved.");
             System.out.println("\n");
+            System.out.println("\u001B[31mmReturning to Home Screen....\u001B[31m");
 
 
         }
@@ -149,6 +151,7 @@ public class LedgerApp {
                     //View all entries
 
                     for (Transaction transaction : transactions) {
+                        System.out.printf(" %-15s %-15s %-28s %-25s %10s\n","Date", "Time", "Description", "Vendor", "Amount");
 
                         System.out.printf("%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
 
@@ -171,7 +174,7 @@ public class LedgerApp {
                     //View payments
                     for (Transaction transaction : transactions) {
                         if (transaction.getAmount() < 0) {
-
+                            System.out.printf("%-15s %-15s %-28s %-25s %10s\n", "Date", "Time", "Description", "Vendor", "Amount");
                             System.out.printf("%-15s %-15s %-20s %-15s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
 
                             System.out.println("----------------------------------------------------------------------");
@@ -197,8 +200,22 @@ public class LedgerApp {
 
     public void displayReports()
     {
-        List<Transaction> transactions = readTransactionFromCSV(csvFile);
-        //View reports
+        //Current Month & Year
+        LocalDate currentDate = LocalDate.now();
+        int currentMonth = currentDate.getMonthValue();
+        int currentYear = currentDate.getYear();
+        List<Transaction> allTransactions = readTransactionFromCSV(csvFile);
+
+        // Previous Month & Year
+        LocalDate previousMonth = LocalDate.now().minusMonths(1);
+        int previousMonthValue = previousMonth.getMonthValue();
+
+        LocalDate previousYear = LocalDate.now().minusYears(1);
+        int previousYearValue = previousYear.getYear();
+
+
+
+        //View report options
         System.out.println("1.) Month to Date");
         System.out.println("2.) Previous Month");
         System.out.println("3.) Year to Date");
@@ -208,34 +225,81 @@ public class LedgerApp {
 
         String reportChoice = scanner.nextLine();
 
-        switch (reportChoice)
-        {
+        List<Transaction> currentMonthTransactions = new ArrayList<>();
+        switch (reportChoice) {
+
             case "1":
-                //Generate Month To Date report
+                //Generate Month to date report
+                for (Transaction transaction : allTransactions) {
+                    if (transaction.getDate().getMonthValue() == currentMonth && transaction.getDate().getYear() == currentYear) {
+                        System.out.printf("%-15s %-15s %-28s %-25s %10s\n", "Date", "Time", "Description", "Vendor", "Amount");
+                        System.out.printf("%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+
+                        System.out.println("----------------------------------------------------------------------");
+                    }
+                }
                 break;
+
             case "2":
                 //Generate Previous Month report
+                for (Transaction transaction : allTransactions) {
+                    if (transaction.getDate().getMonthValue() == previousMonthValue && transaction.getDate().getYear() == previousYearValue) {
+                        System.out.printf("%-15s %-15s %-28s %-25s %10s\n", "Date", "Time", "Description", "Vendor", "Amount");
+                        System.out.printf("%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+
+                        System.out.println("----------------------------------------------------------------------");
+                    }
+                }
                 break;
+
             case "3":
                 //Generate Year To Date report:
+                for (Transaction transaction : allTransactions) {
+                    if (transaction.getDate().getYear() == currentYear) {
+                        System.out.printf("%-15s %-15s %-28s %-25s %10s\n", "Date", "Time", "Description", "Vendor", "Amount");
+                        System.out.printf("%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+
+                        System.out.println("----------------------------------------------------------------------");
+                    }
+                }
                 break;
             case "4":
                 //Generate Previous Year report
+                for (Transaction transaction : allTransactions) {
+                    if (transaction.getDate().getYear() == previousYearValue && transaction.getDate().getYear() == previousYearValue) {
+                        System.out.printf("%-15s %-15s %-28s %-25s %10s\n", "Date", "Time", "Description", "Vendor", "Amount");
+                        System.out.printf("%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+
+                        System.out.println("----------------------------------------------------------------------");
+                    }
+                }
+
                 break;
+
             case "5":
                 //Search by Vendor
                 System.out.println("Enter the name of the vendor: ");
                 String vendor = scanner.nextLine();
 
-                //Generate report by vendor
+
+                for (Transaction transaction : allTransactions)
+                {
+                    if (transaction.getVendor().equalsIgnoreCase(vendor))
+                    {
+                        System.out.printf("%-15s %-15s %-28s %-25s %10s\n", "Date", "Time", "Description", "Vendor", "Amount");
+                        System.out.printf("%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                        System.out.println("----------------------------------------------------------------------");
+                    }
+                }
                 break;
             default:
                 System.out.println("Invalid choice. Please select one of the listed options. ");
                 break;
         }
-
-
     }
+
+
+
     public List<Transaction> readTransactionFromCSV(String csvFile) {
         List<Transaction> transactions = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(csvFile)))
@@ -265,6 +329,8 @@ public class LedgerApp {
         Scanner scanner1 = new Scanner(System.in);
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();
+        int month = today.getMonthValue();
+        int year = today.getYear();
 
         System.out.println("Date of deposit: " + date);
 
