@@ -117,7 +117,7 @@ public class LedgerApp {
             writer.close();
             System.out.println("Transaction saved.");
             System.out.println("\n");
-            System.out.println("\u001B[31mmReturning to Home Screen....\u001B[31m");
+            System.out.println( ColorCodes.GREEN + "Returning to Home Screen...." + ColorCodes.RESET);
 
 
         }
@@ -131,15 +131,15 @@ public class LedgerApp {
     {
         while(true) {
             System.out.println("\n");
-            System.out.println("Ledger Screen");
-            System.out.println("---------------------------------------------");
-            System.out.println("Please select a option: ");
+            System.out.println(ColorCodes.BLACK_BACKGROUND + "Ledger Screen" + ColorCodes.RESET);
+            System.out.println(ColorCodes.WHITE_BACKGROUND + "---------------------------------------------"+ ColorCodes.RESET);
+            System.out.println(ColorCodes.ORANGE + "Please select a option: ");
             System.out.println("\n");
             System.out.println("1.) View all entries ");
             System.out.println("2.) View deposits ");
             System.out.println("3.) View payments ");
             System.out.println("4.) View reports ");
-            System.out.println("5.) Go back to home screen ");
+            System.out.println("5.) Go back to home screen " + ColorCodes.RESET);
 
 
             String choice = scanner.nextLine();
@@ -151,10 +151,10 @@ public class LedgerApp {
                     //View all entries
 
                     for (Transaction transaction : transactions) {
-                        System.out.printf(" %-15s %-15s %-28s %-25s %10s\n","Date", "Time", "Description", "Vendor", "Amount");
+                        System.out.printf(ColorCodes.BLACK_BACKGROUND + " %-15s %-15s %-28s %-25s %10s\n","Date", "Time", "Description", "Vendor", "Amount" + ColorCodes.RESET);
 
-                        System.out.printf("%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
-
+                        System.out.printf(ColorCodes.RED_BACKGROUND + "%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount() );
+                        System.out.println(ColorCodes.RESET);
                         System.out.println("-------------------------------------------------------------------------------------------------------");
                     }
 
@@ -163,9 +163,9 @@ public class LedgerApp {
                     //View deposits
                     for (Transaction transaction : transactions) {
                         if (transaction.getAmount()>0) {
-
-                            System.out.printf("%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
-
+                            System.out.printf(ColorCodes.BLACK_BACKGROUND + " %-15s %-15s %-28s %-25s %10s\n","Date", "Time", "Description", "Vendor", "Amount" + ColorCodes.RESET);
+                            System.out.printf(ColorCodes.RED_BACKGROUND + "%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                            System.out.println(ColorCodes.RESET);
                             System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
                         }
                     }
@@ -174,9 +174,9 @@ public class LedgerApp {
                     //View payments
                     for (Transaction transaction : transactions) {
                         if (transaction.getAmount() < 0) {
-                            System.out.printf("%-15s %-15s %-28s %-25s %10s\n", "Date", "Time", "Description", "Vendor", "Amount");
-                            System.out.printf("%-15s %-15s %-20s %-15s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
-
+                            System.out.printf(ColorCodes.BLACK_BACKGROUND + " %-15s %-15s %-28s %-25s %10s\n","Date", "Time", "Description", "Vendor", "Amount" + ColorCodes.RESET);
+                            System.out.printf( ColorCodes.RED_BACKGROUND +"%-15s %-15s %-20s %-15s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                            System.out.println(ColorCodes.RESET);
                             System.out.println("----------------------------------------------------------------------");
                         }
                     }
@@ -216,12 +216,12 @@ public class LedgerApp {
 
 
         //View report options
-        System.out.println("1.) Month to Date");
+        System.out.println(ColorCodes.CYAN + "1.) Month to Date");
         System.out.println("2.) Previous Month");
         System.out.println("3.) Year to Date");
         System.out.println("4.) Previous Year");
         System.out.println("5.) Search by Vendor");
-        System.out.println("Please select a report option:");
+        System.out.println("Please select a report option:" + ColorCodes.RESET);
 
         String reportChoice = scanner.nextLine();
 
@@ -232,9 +232,9 @@ public class LedgerApp {
                 //Generate Month to date report
                 for (Transaction transaction : allTransactions) {
                     if (transaction.getDate().getMonthValue() == currentMonth && transaction.getDate().getYear() == currentYear) {
-                        System.out.printf("%-15s %-15s %-28s %-25s %10s\n", "Date", "Time", "Description", "Vendor", "Amount");
-                        System.out.printf("%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
-
+                        System.out.printf(ColorCodes.BLACK_BACKGROUND + " %-15s %-15s %-28s %-25s %10s\n","Date", "Time", "Description", "Vendor", "Amount" + ColorCodes.RESET);
+                        System.out.printf(ColorCodes.RED_BACKGROUND + "%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                        System.out.println(ColorCodes.RESET);
                         System.out.println("----------------------------------------------------------------------");
                     }
                 }
@@ -244,9 +244,9 @@ public class LedgerApp {
                 //Generate Previous Month report
                 for (Transaction transaction : allTransactions) {
                     if (transaction.getDate().getMonthValue() == previousMonthValue && transaction.getDate().getYear() == previousYearValue) {
-                        System.out.printf("%-15s %-15s %-28s %-25s %10s\n", "Date", "Time", "Description", "Vendor", "Amount");
-                        System.out.printf("%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
-
+                        System.out.printf(ColorCodes.BLACK_BACKGROUND + " %-15s %-15s %-28s %-25s %10s\n","Date", "Time", "Description", "Vendor", "Amount" + ColorCodes.RESET);
+                        System.out.printf(ColorCodes.RED_BACKGROUND + "%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                        System.out.println(ColorCodes.RESET);
                         System.out.println("----------------------------------------------------------------------");
                     }
                 }
@@ -256,9 +256,9 @@ public class LedgerApp {
                 //Generate Year To Date report:
                 for (Transaction transaction : allTransactions) {
                     if (transaction.getDate().getYear() == currentYear) {
-                        System.out.printf("%-15s %-15s %-28s %-25s %10s\n", "Date", "Time", "Description", "Vendor", "Amount");
-                        System.out.printf("%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
-
+                        System.out.printf(ColorCodes.BLACK_BACKGROUND + " %-15s %-15s %-28s %-25s %10s\n","Date", "Time", "Description", "Vendor", "Amount" + ColorCodes.RESET);
+                        System.out.printf(ColorCodes.RED_BACKGROUND + "%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                        System.out.println(ColorCodes.RESET);
                         System.out.println("----------------------------------------------------------------------");
                     }
                 }
@@ -267,9 +267,9 @@ public class LedgerApp {
                 //Generate Previous Year report
                 for (Transaction transaction : allTransactions) {
                     if (transaction.getDate().getYear() == previousYearValue && transaction.getDate().getYear() == previousYearValue) {
-                        System.out.printf("%-15s %-15s %-28s %-25s %10s\n", "Date", "Time", "Description", "Vendor", "Amount");
-                        System.out.printf("%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
-
+                        System.out.printf(ColorCodes.BLACK_BACKGROUND + " %-15s %-15s %-28s %-25s %10s\n","Date", "Time", "Description", "Vendor", "Amount" + ColorCodes.RESET);
+                        System.out.printf(ColorCodes.RED_BACKGROUND + "%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                        System.out.println(ColorCodes.RESET);
                         System.out.println("----------------------------------------------------------------------");
                     }
                 }
@@ -278,7 +278,7 @@ public class LedgerApp {
 
             case "5":
                 //Search by Vendor
-                System.out.println("Enter the name of the vendor: ");
+                System.out.println(ColorCodes.GREEN_BACKGROUND + "Enter the name of the vendor: "+ ColorCodes.RESET);
                 String vendor = scanner.nextLine();
 
 
@@ -286,14 +286,15 @@ public class LedgerApp {
                 {
                     if (transaction.getVendor().equalsIgnoreCase(vendor))
                     {
-                        System.out.printf("%-15s %-15s %-28s %-25s %10s\n", "Date", "Time", "Description", "Vendor", "Amount");
-                        System.out.printf("%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                        System.out.printf(ColorCodes.BLACK_BACKGROUND + " %-15s %-15s %-28s %-25s %10s\n","Date", "Time", "Description", "Vendor", "Amount" + ColorCodes.RESET);
+                        System.out.printf(ColorCodes.RED_BACKGROUND + "%-15s %-15s %-28s %-25s %10f\n", transaction.getDate(), transaction.getTime(), transaction.getDescription(), transaction.getVendor(), transaction.getAmount());
+                        System.out.println(ColorCodes.RESET);
                         System.out.println("----------------------------------------------------------------------");
                     }
                 }
                 break;
             default:
-                System.out.println("Invalid choice. Please select one of the listed options. ");
+                System.out.println(ColorCodes.RED + "Invalid choice. Please select one of the listed options. " + ColorCodes.RESET);
                 break;
         }
     }
